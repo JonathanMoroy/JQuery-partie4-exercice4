@@ -1,0 +1,15 @@
+fieldset {
+  background-color: grey;
+}
+
+legend {
+  background-color: grey;
+}
+
+body {
+  background-color: darkblue;
+}
+
+#result {
+  color: darkorange;
+}

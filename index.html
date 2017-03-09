@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Link du css jquery ui -->
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery-2.2.4.js"></script>
+  <!-- Script du jquery ui -->
+  <script src="jquery-ui.js"></script>
+  <meta charset="utf-8">
+  <title>Exercice 4</title>
+  <script>
+  // Ajout de la fonction datepicker à mon input du même nom pour avec une interface user
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
+</head>
+<body>
+  <!-- Ajout d'un formulaire contenant 6 input et un bouton pour générer le résultat dans un p -->
+  <form>
+    <fieldset>
+      <legend>Merci de renseigner les champs ci-dessous</legend>
+      <label for="second_name">Nom: </label><input type="text" name="second_name" id="second_name" value=""><br>
+      <label for="first_name">Prénom: </label><input type="text" name="first_name" id="first_name" value=""><br>
+      <label for="datepicker">Date de naissance: </label><input type="text" name="datepicker" id="datepicker" value="" placeholder="ex: MM/JJ/AAAA"><br>
+      <label for="born_place">Lieu de naissance: </label><input type="text" name="born_place" id="born_place" value=""><br>
+      <label for="job">Emploi: </label><input type="text" name="job" id="job" value=""><br>
+      <label for="firm">Société: </label><input type="text" name="firm" id="firm" value="">
+    </fieldset>
+    <button type="button" name="button" id="generate">Générez</button><br>
+  </form>
+  <p id="result"></p>
+  <script>
+  // Fonction ready
+  $(function() {
+    // Ajout d'un click à mon bouton generate
+    $('#generate').click(function() {
+      // Déclaration de variables pour récupérer les valeurs comme je le souhaite et déclarer les regex
+      var second_name = $('#second_name').val() ;
+      var first_name = $('#first_name').val() ;
+      var born = $('#datepicker').val() ;
+      var born_place = $('#born_place').val() ;
+      var job = $('#job').val() ;
+      var firm = $('#firm').val() ;
+      var letter_regex = '^[A-z- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$';
+      var letterNumber_regex = '^[A-z0-9- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$';
+      var born_table = born.split('/');
+      var year = born_table [2];
+      var month = born_table [0];
+      var day = born_table [1];
+      // Début des conditions pour la date de naissance vérifiant d'abord les années et les mois
+      if (year < 1900 || year > 2017 || year % 1 != 0) {
+        alert('Attention vous avez rentré une mauvaise valeur pour l\'année');
+      } else if (month < 1 || month > 12 || month % 1 != 0) {
+        alert('Attention vous avez rentré une mauvaise valeur pour le mois');
+      } else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+        // Ajout de if en réponse à des else if pour poser des conditions dans des conditions
+        if (day > 31 || day < 1 || day % 1 != 0) {
+          alert('Attention vous avez mis plus de 31 jours');
+        }
+      } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        if (day > 30 || day < 1 || day % 1 != 0) {
+          alert('Attention vous avez mis plus de 30 jours');
+        }
+        // Début de vérification pour les années bissextiles
+      } else if (month == 2 && year % 400 == 0 || year % 4 == 0 && year % 100 != 0) {
+        if (day > 29 || day < 1 || day % 1 != 0) {
+          alert('Attention vous avez mis plus de 29 jours au mois de Février');
+        }
+      } else if (month == 2) {
+        if (day > 28 || day < 1 || day % 1 != 0) {
+          alert('Attention vous avez mis plus de 28 jours au mois de Février');
+        }
+      }
+      // Début d'une deuxième condition cette fois pour les regex qui va définitivement envoyer le résultat dans le p result
+      if (second_name.match(letter_regex) && first_name.match(letter_regex) && born_place.match(letter_regex) && job.match(letter_regex) && firm.match(letterNumber_regex)) {
+        $('#result').empty();
+        $('#result').append(first_name+' '+second_name+', né(e) le '+born+' à '+born_place+', actuellement '+job+' à '+firm+'.');
+      } else {
+        alert('Attention la syntaxe utiliser n\'est pas la bonne.');
+      }
+    }); // ~ Click - generate
+  }); // ~ Ready
+  </script>
+</body>
+</html>
