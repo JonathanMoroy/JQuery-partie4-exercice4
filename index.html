@@ -43,8 +43,9 @@
       var born_place = $('#born_place').val() ;
       var job = $('#job').val() ;
       var firm = $('#firm').val() ;
-      var letter_regex = '^[A-z- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$';
-      var letterNumber_regex = '^[A-z0-9- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$';
+      var letter_regex = /^[A-z- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$/;
+      var letterNumber_regex = /^[A-z0-9- \\áàâäãçéèêëíìîïñóòôöõúùûüÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ\s]{1,99}$/;
+      var date_regex = /^(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19\d{2}|200[01])$/;
       var born_table = born.split('/');
       var year = born_table [2];
       var month = born_table [0];
@@ -74,7 +75,7 @@
         }
       }
       // Début d'une deuxième condition cette fois pour les regex qui va définitivement envoyer le résultat dans le p result
-      if (second_name.match(letter_regex) && first_name.match(letter_regex) && born_place.match(letter_regex) && job.match(letter_regex) && firm.match(letterNumber_regex)) {
+      if (second_name.match(letter_regex) && first_name.match(letter_regex) && born_place.match(letter_regex) && job.match(letter_regex) && firm.match(letterNumber_regex) && born.match(date_regex)) {
         $('#result').empty();
         $('#result').append(first_name+' '+second_name+', né(e) le '+born+' à '+born_place+', actuellement '+job+' à '+firm+'.');
       } else {

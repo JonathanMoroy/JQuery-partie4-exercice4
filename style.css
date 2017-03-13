@@ -13,3 +13,9 @@ body {
 #result {
   color: darkorange;
 }
+
+label {
+  display: block;
+  width: 180px;
+  float: left;
+}
